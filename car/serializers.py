@@ -12,12 +12,13 @@ class CarSerializer(serializers.ModelSerializer):
     class Meta:
         model = Car
         fields = ['id', 'name', 'brand',
-                  'service_area', 'rent_price', 'image_url', 'owner']
+                  'service_area', 'service_area_to', 'rent_price', 'image_url', 'owner']
 
     def create(self, validated_data):
         name = self.validated_data['name']
         brand = self.validated_data['brand']
         service_area = self.validated_data['service_area']
+        service_area_to = self.validated_data['service_area_to']
         rent_price = self.validated_data['rent_price']
         image_url = self.validated_data['image_url']
 
@@ -25,7 +26,7 @@ class CarSerializer(serializers.ModelSerializer):
 
         if User.objects.filter(pk=user_id).exists():
             if User.objects.get(pk=user_id).is_owner:
-                return Car.objects.create(name=name, brand=brand, service_area=service_area, rent_price=rent_price, image_url=image_url, owner_id=user_id)
+                return Car.objects.create(name=name, brand=brand, service_area=service_area, service_area_to=service_area_to, rent_price=rent_price, image_url=image_url, owner_id=user_id)
 
             else:
                 raise serializers.ValidationError(
@@ -40,7 +41,7 @@ class UserCarSerializer(serializers.ModelSerializer):
     class Meta:
         model = Car
         fields = ['id', 'name', 'brand',
-                  'service_area', 'rent_price', 'image_url', 'owner']
+                  'service_area', 'service_area_to', 'rent_price', 'image_url', 'owner']
 
 
 class BookingSerializer(serializers.ModelSerializer):
@@ -75,5 +76,6 @@ class CreateBookingSerializer(serializers.ModelSerializer):
                     user_id=user_id, car_id=car_id, bookingDate=today).exists():
 
                 return Booking.objects.create(user_id=user_id, car_id=car_id)
-            raise serializers.ValidationError({'error':'You all ready Booked This car Today !'})
+            raise serializers.ValidationError(
+                {'error': 'You all ready Booked This car Today !'})
         raise serializers.ValidationError({'error': 'User Not Valid !'})

@@ -8,6 +8,7 @@ class Car(models.Model):
     name = models.CharField(max_length=255)
     brand = models.CharField(max_length=30)
     service_area = models.CharField(max_length=40)
+    service_area_to = models.CharField(max_length=40, null=True)
     rent_price = models.IntegerField()
     image_url = models.CharField(max_length=500)
     owner = models.ForeignKey(settings.AUTH_USER_MODEL,
