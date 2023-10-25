@@ -16,6 +16,6 @@ class CarAdmin(admin.ModelAdmin):
 class BookingAdmin(admin.ModelAdmin):
     '''Admin View for Booking'''
 
-    list_display = ('id','user','car','bookingDate')
+    list_display = ('id','user','car','phone','bookingDate')
     list_per_page=10
     

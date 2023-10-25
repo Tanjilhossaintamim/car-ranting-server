@@ -50,7 +50,7 @@ class BookingSerializer(serializers.ModelSerializer):
 
     class Meta:
         model = Booking
-        fields = ['id', 'user', 'car', 'bookingDate']
+        fields = ['id', 'user', 'car', 'phone', 'bookingDate']
 
 
 class CreateBookingSerializer(serializers.ModelSerializer):
@@ -59,7 +59,7 @@ class CreateBookingSerializer(serializers.ModelSerializer):
 
     class Meta:
         model = Booking
-        fields = ['id', 'user_id', 'car_id', 'bookingDate']
+        fields = ['id', 'user_id', 'car_id', 'phone', 'bookingDate']
 
     def validate_car_id(self, car_id):
         if Car.objects.filter(pk=car_id).exists():
@@ -69,13 +69,14 @@ class CreateBookingSerializer(serializers.ModelSerializer):
     def create(self, validated_data):
         user_id = self.context.get('user_id')
         car_id = self.validated_data['car_id']
+        phone = self.validated_data['phone']
         print(datetime.today().date())
         if User.objects.filter(pk=user_id).exists():
             today = datetime.today().date()
             if not Booking.objects.filter(
                     user_id=user_id, car_id=car_id, bookingDate=today).exists():
 
-                return Booking.objects.create(user_id=user_id, car_id=car_id)
+                return Booking.objects.create(user_id=user_id, phone=phone, car_id=car_id)
             raise serializers.ValidationError(
                 {'error': 'You all ready Booked This car Today !'})
         raise serializers.ValidationError({'error': 'User Not Valid !'})

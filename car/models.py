@@ -22,4 +22,5 @@ class Booking(models.Model):
     user = models.ForeignKey(settings.AUTH_USER_MODEL,
                              on_delete=models.CASCADE)
     car = models.ForeignKey(Car, on_delete=models.CASCADE)
+    phone = models.CharField(max_length=20, null=True)
     bookingDate = models.DateField(auto_now_add=True)
