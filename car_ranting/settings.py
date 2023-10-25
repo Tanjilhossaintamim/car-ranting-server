@@ -27,7 +27,7 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 SECRET_KEY = 'django-insecure-$38eg4!i9c*49y$vj4b7gqfd@-zqa($s+c!n4g7#l(7t__jr&e'
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = True
+DEBUG = False
 
 ALLOWED_HOSTS = ['*']
 
@@ -62,6 +62,7 @@ MIDDLEWARE = [
 CORS_ALLOWED_ORIGINS = [
 
     "http://localhost:5173",
+    "https://car-renting-web.netlify.app"
 
 ]
 
