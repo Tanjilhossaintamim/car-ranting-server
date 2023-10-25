@@ -29,6 +29,7 @@ class UserCarViewSet(ModelViewSet):
     http_method_names = ['get']
     serializer_class = UserCarSerializer
     permission_classes = [IsAuthenticated]
+    pagination_class = DefaultPagination
 
     def get_queryset(self):
         return Car.objects.filter(owner_id=self.request.user.id)
